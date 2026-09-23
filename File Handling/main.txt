@@ -1,0 +1,1057 @@
+📁 File Handling in Python — Complete Guide
+1. What is File Handling?
+
+File handling means using Python to create, read, write, update, and delete files.
+
+Python can work with files such as:
+
+.txt — text files
+.csv — tabular data
+.json — structured data
+.log — log files
+Binary files such as images, PDFs, etc.
+
+Basic flow:
+
+Open file
+   ↓
+Read / Write / Append
+   ↓
+Close file
+2. Opening a File
+
+Python uses the open() function.
+
+Syntax
+file = open("filename.txt", "mode")
+
+Example:
+
+file = open("data.txt", "r")
+
+Here:
+
+data.txt → filename
+"r" → mode
+file → file object
+3. File Modes
+
+These are the most important modes:
+
+Mode	Meaning
+r	Read
+w	Write
+a	Append
+x	Create new file
+b	Binary
+t	Text
++	Read and write
+Common combinations
+"r"    # read
+"w"    # write
+"a"    # append
+"x"    # create
+"r+"   # read + write
+"w+"   # write + read
+"a+"   # append + read
+"rb"   # read binary
+"wb"   # write binary
+4. Reading a File
+
+Suppose data.txt contains:
+
+Hello Python
+I am learning file handling
+Python is easy
+Method 1 — read()
+file = open("data.txt", "r")
+
+data = file.read()
+
+print(data)
+
+file.close()
+
+Output:
+
+Hello Python
+I am learning file handling
+Python is easy
+
+read() reads the entire file.
+
+5. Reading Specific Number of Characters
+file = open("data.txt", "r")
+
+data = file.read(5)
+
+print(data)
+
+file.close()
+
+If the file starts with:
+
+Hello Python
+
+Output:
+
+Hello
+
+read(5) reads the first 5 characters.
+
+6. readline()
+
+readline() reads one line at a time.
+
+file = open("data.txt", "r")
+
+line = file.readline()
+
+print(line)
+
+file.close()
+
+If:
+
+Hello Python
+I am learning Python
+Python is powerful
+
+Output:
+
+Hello Python
+
+You can call it again:
+
+file = open("data.txt", "r")
+
+print(file.readline())
+print(file.readline())
+print(file.readline())
+
+file.close()
+7. readlines()
+
+readlines() reads all lines and returns them as a list.
+
+file = open("data.txt", "r")
+
+lines = file.readlines()
+
+print(lines)
+
+file.close()
+
+Output:
+
+['Hello Python\n', 'I am learning Python\n', 'Python is powerful\n']
+
+Notice \n.
+
+It represents a new line.
+
+8. Reading Using a Loop
+
+This is very common.
+
+file = open("data.txt", "r")
+
+for line in file:
+    print(line)
+
+file.close()
+
+Better version:
+
+file = open("data.txt", "r")
+
+for line in file:
+    print(line.strip())
+
+file.close()
+
+strip() removes unnecessary whitespace and \n.
+
+9. Writing to a File
+
+Use "w" mode.
+
+file = open("data.txt", "w")
+
+file.write("Hello Python")
+
+file.close()
+
+Now data.txt contains:
+
+Hello Python
+⚠️ Important
+
+"w" overwrites existing content.
+
+For example, if your file contains:
+
+Hello
+Python
+
+and you run:
+
+file = open("data.txt", "w")
+file.write("New Data")
+file.close()
+
+The old content is deleted.
+
+Now:
+
+New Data
+10. Writing Multiple Lines
+file = open("data.txt", "w")
+
+file.write("Python\n")
+file.write("Java\n")
+file.write("C++\n")
+
+file.close()
+
+File:
+
+Python
+Java
+C++
+11. writelines()
+
+You can write multiple strings using a list.
+
+file = open("data.txt", "w")
+
+lines = [
+    "Python\n",
+    "Java\n",
+    "C++\n"
+]
+
+file.writelines(lines)
+
+file.close()
+12. Append Data
+
+Use "a".
+
+Append means add new data at the end.
+
+file = open("data.txt", "a")
+
+file.write("\nJavaScript")
+
+file.close()
+
+If the file was:
+
+Python
+Java
+C++
+
+It becomes:
+
+Python
+Java
+C++
+JavaScript
+
+Unlike "w", "a" doesn't delete existing data.
+
+13. Difference Between w and a
+w
+file = open("data.txt", "w")
+file.write("Hello")
+file.close()
+
+➡️ Deletes old content.
+
+a
+file = open("data.txt", "a")
+file.write("Hello")
+file.close()
+
+➡️ Keeps old content and adds "Hello" at the end.
+
+14. Creating a New File with x
+
+x creates a new file.
+
+file = open("newfile.txt", "x")
+
+file.write("Hello")
+
+file.close()
+
+If the file already exists, Python gives:
+
+FileExistsError
+15. Closing a File
+
+After working with a file:
+
+file.close()
+
+Example:
+
+file = open("data.txt", "r")
+
+print(file.read())
+
+file.close()
+
+Why close it?
+
+Because files use system resources. Closing ensures those resources are released.
+
+16. The with Statement ⭐
+
+This is the recommended way to work with files.
+
+Instead of:
+
+file = open("data.txt", "r")
+
+data = file.read()
+
+file.close()
+
+Use:
+
+with open("data.txt", "r") as file:
+    data = file.read()
+
+print(data)
+
+Python automatically closes the file.
+
+You don't need:
+
+file.close()
+17. Why with is Better?
+
+Suppose an error occurs:
+
+file = open("data.txt", "r")
+
+data = file.read()
+
+x = 10 / 0
+
+file.close()
+
+Because the error happens before close(), the file might not be properly closed.
+
+With:
+
+with open("data.txt", "r") as file:
+    data = file.read()
+    x = 10 / 0
+
+Python handles the cleanup automatically.
+
+18. Check Whether File Exists
+
+Use the os module.
+
+import os
+
+if os.path.exists("data.txt"):
+    print("File exists")
+else:
+    print("File does not exist")
+19. Delete a File
+import os
+
+os.remove("data.txt")
+Safer version
+import os
+
+if os.path.exists("data.txt"):
+    os.remove("data.txt")
+    print("File deleted")
+else:
+    print("File not found")
+20. Create a Folder
+import os
+
+os.mkdir("MyFolder")
+21. Check Folder Exists
+import os
+
+if os.path.exists("MyFolder"):
+    print("Folder exists")
+22. Delete an Empty Folder
+import os
+
+os.rmdir("MyFolder")
+23. Get Current Directory
+import os
+
+print(os.getcwd())
+
+getcwd() means:
+
+Get Current Working Directory
+
+24. List Files and Folders
+import os
+
+print(os.listdir())
+
+Example output:
+
+['data.txt', 'main.py', 'images', 'test.py']
+25. File Paths
+
+You can specify a folder:
+
+file = open("data/data.txt", "r")
+
+Or:
+
+with open("files/data.txt", "r") as file:
+    print(file.read())
+
+For Windows paths, raw strings can be useful:
+
+file_path = r"C:\Users\Dev\data.txt"
+26. seek() — Move File Cursor
+
+When reading a file, Python maintains a cursor.
+
+Example:
+
+with open("data.txt", "r") as file:
+    print(file.read(5))
+    print(file.read(5))
+
+The first read(5) reads characters 1–5.
+
+The second starts from character 6.
+
+You can move the cursor using seek():
+
+with open("data.txt", "r") as file:
+
+    print(file.read(5))
+
+    file.seek(0)
+
+    print(file.read(5))
+
+Output:
+
+Hello
+Hello
+
+seek(0) moves the cursor back to the beginning.
+
+27. tell()
+
+tell() tells you the current cursor position.
+
+with open("data.txt", "r") as file:
+
+    print(file.tell())
+
+    print(file.read(5))
+
+    print(file.tell())
+
+Example:
+
+0
+Hello
+5
+28. File Exception Handling ⭐
+
+File handling can produce errors.
+
+For example:
+
+try:
+    with open("data.txt", "r") as file:
+        print(file.read())
+
+except FileNotFoundError:
+    print("File not found!")
+
+This is much better than allowing your program to crash.
+
+29. Multiple Exceptions
+try:
+    with open("data.txt", "r") as file:
+        data = file.read()
+
+except FileNotFoundError:
+    print("File does not exist!")
+
+except PermissionError:
+    print("You don't have permission to access this file!")
+
+except Exception as e:
+    print("Something went wrong:", e)
+30. File Properties
+
+You can check whether a file is closed:
+
+file = open("data.txt", "r")
+
+print(file.closed)
+
+file.close()
+
+print(file.closed)
+
+Output:
+
+False
+True
+31. File mode
+file = open("data.txt", "r")
+
+print(file.mode)
+
+file.close()
+
+Output:
+
+r
+32. File Name
+file = open("data.txt", "r")
+
+print(file.name)
+
+file.close()
+
+Output:
+
+data.txt
+33. Text Files vs Binary Files
+Text
+with open("data.txt", "r") as file:
+    print(file.read())
+Binary
+
+Binary files include:
+
+images
+videos
+PDFs
+audio
+executable files
+
+Use:
+
+with open("image.jpg", "rb") as file:
+    data = file.read()
+
+b means binary.
+
+34. Copy an Image
+
+You can copy binary files:
+
+with open("image.jpg", "rb") as source:
+    data = source.read()
+
+with open("copy.jpg", "wb") as destination:
+    destination.write(data)
+35. CSV Files
+
+CSV means:
+
+Comma-Separated Values
+
+Example:
+
+name,age,city
+Dev,22,Ahmedabad
+Rahul,23,Rajkot
+Amit,21,Surat
+
+Python has a built-in csv module.
+
+import csv
+36. Read CSV
+import csv
+
+with open("students.csv", "r") as file:
+
+    reader = csv.reader(file)
+
+    for row in reader:
+        print(row)
+
+Output:
+
+['name', 'age', 'city']
+['Dev', '22', 'Ahmedabad']
+['Rahul', '23', 'Rajkot']
+37. Write CSV
+import csv
+
+with open("students.csv", "w", newline="") as file:
+
+    writer = csv.writer(file)
+
+    writer.writerow(["Name", "Age", "City"])
+    writer.writerow(["Dev", 22, "Ahmedabad"])
+    writer.writerow(["Rahul", 23, "Rajkot"])
+38. CSV Using Dictionary
+import csv
+
+with open("students.csv", "r") as file:
+
+    reader = csv.DictReader(file)
+
+    for row in reader:
+        print(row["Name"])
+        print(row["Age"])
+        print(row["City"])
+
+This is very useful when working with datasets.
+
+39. JSON Files ⭐
+
+JSON is extremely important for:
+
+APIs
+web development
+AI/ML
+configuration files
+data storage
+
+Example JSON:
+
+{
+    "name": "Dev",
+    "age": 22,
+    "skills": [
+        "Python",
+        "AI",
+        "ML"
+    ]
+}
+
+Python has the built-in json module.
+
+import json
+40. Write JSON
+import json
+
+student = {
+    "name": "Dev",
+    "age": 22,
+    "skills": ["Python", "AI", "ML"]
+}
+
+with open("student.json", "w") as file:
+    json.dump(student, file, indent=4)
+41. Read JSON
+import json
+
+with open("student.json", "r") as file:
+    data = json.load(file)
+
+print(data)
+
+Output:
+
+{
+    'name': 'Dev',
+    'age': 22,
+    'skills': ['Python', 'AI', 'ML']
+}
+
+You can access values:
+
+print(data["name"])
+print(data["age"])
+print(data["skills"])
+42. json.dump() vs json.dumps()
+dump()
+
+Writes JSON into a file:
+
+json.dump(data, file)
+dumps()
+
+Converts Python data into a JSON string:
+
+json_string = json.dumps(data)
+
+print(json_string)
+
+Similarly:
+
+load()
+
+Reads JSON from a file:
+
+data = json.load(file)
+loads()
+
+Reads JSON from a string:
+
+data = json.loads(json_string)
+
+Remember:
+
+dump  → Python → JSON file
+dumps → Python → JSON string
+
+load  → JSON file → Python
+loads → JSON string → Python
+43. Encoding
+
+Sometimes you may have special characters.
+
+Use:
+
+with open("data.txt", "r", encoding="utf-8") as file:
+    data = file.read()
+
+For writing:
+
+with open("data.txt", "w", encoding="utf-8") as file:
+    file.write("Hello भारत")
+
+UTF-8 supports many languages and symbols.
+
+44. Newline Parameter
+
+When writing CSV files:
+
+with open("data.csv", "w", newline="") as file:
+
+newline="" helps avoid unwanted blank lines, especially on some platforms.
+
+45. Important File Methods
+
+You should remember these:
+
+Method	Purpose
+open()	Open file
+read()	Read entire/specified content
+readline()	Read one line
+readlines()	Read lines into list
+write()	Write data
+writelines()	Write multiple lines
+seek()	Move cursor
+tell()	Get cursor position
+close()	Close file
+46. Practical Program 1 — Create and Read File
+try:
+    with open("students.txt", "w") as file:
+        file.write("Dev\n")
+        file.write("Rahul\n")
+        file.write("Amit\n")
+
+    with open("students.txt", "r") as file:
+        print(file.read())
+
+except Exception as e:
+    print("Error:", e)
+47. Practical Program 2 — Count Lines
+with open("data.txt", "r") as file:
+
+    lines = file.readlines()
+
+    print("Total lines:", len(lines))
+48. Practical Program 3 — Count Words
+with open("data.txt", "r") as file:
+
+    data = file.read()
+
+    words = data.split()
+
+    print("Total words:", len(words))
+49. Practical Program 4 — Count Characters
+with open("data.txt", "r") as file:
+
+    data = file.read()
+
+    print("Total characters:", len(data))
+50. Practical Program 5 — Search Word
+word = input("Enter word to search: ")
+
+with open("data.txt", "r") as file:
+
+    data = file.read()
+
+    if word in data:
+        print("Word found")
+    else:
+        print("Word not found")
+51. Practical Program 6 — Count a Word
+word = input("Enter word: ")
+
+with open("data.txt", "r") as file:
+
+    data = file.read()
+
+    count = data.lower().count(word.lower())
+
+    print("Count:", count)
+52. Practical Program 7 — Copy Text File
+with open("source.txt", "r") as source:
+    data = source.read()
+
+with open("destination.txt", "w") as destination:
+    destination.write(data)
+
+print("File copied successfully")
+53. Practical Program 8 — Student Record
+name = input("Enter name: ")
+age = input("Enter age: ")
+course = input("Enter course: ")
+
+with open("student.txt", "w") as file:
+
+    file.write(f"Name: {name}\n")
+    file.write(f"Age: {age}\n")
+    file.write(f"Course: {course}\n")
+
+print("Student information saved.")
+54. Practical Program 9 — Append Student
+name = input("Enter name: ")
+age = input("Enter age: ")
+
+with open("students.txt", "a") as file:
+
+    file.write(f"Name: {name}, Age: {age}\n")
+
+print("Student added.")
+55. Practical Program 10 — Simple Log System
+
+This is a useful real-world example.
+
+from datetime import datetime
+
+message = input("Enter log message: ")
+
+with open("app.log", "a") as file:
+
+    time = datetime.now()
+
+    file.write(f"{time} - {message}\n")
+
+print("Log saved.")
+
+Example:
+
+2026-09-21 12:00:10 - User logged in
+2026-09-21 12:02:15 - Product added
+56. Practical Program 11 — File Manager
+import os
+
+while True:
+
+    print("\n1. Create File")
+    print("2. Read File")
+    print("3. Write File")
+    print("4. Append File")
+    print("5. Delete File")
+    print("6. Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+
+        filename = input("Enter filename: ")
+
+        try:
+            with open(filename, "x") as file:
+                print("File created.")
+
+        except FileExistsError:
+            print("File already exists.")
+
+    elif choice == "2":
+
+        filename = input("Enter filename: ")
+
+        try:
+            with open(filename, "r") as file:
+                print(file.read())
+
+        except FileNotFoundError:
+            print("File not found.")
+
+    elif choice == "3":
+
+        filename = input("Enter filename: ")
+        data = input("Enter data: ")
+
+        with open(filename, "w") as file:
+            file.write(data)
+
+        print("Data written.")
+
+    elif choice == "4":
+
+        filename = input("Enter filename: ")
+        data = input("Enter data: ")
+
+        with open(filename, "a") as file:
+            file.write("\n" + data)
+
+        print("Data appended.")
+
+    elif choice == "5":
+
+        filename = input("Enter filename: ")
+
+        if os.path.exists(filename):
+            os.remove(filename)
+            print("File deleted.")
+        else:
+            print("File not found.")
+
+    elif choice == "6":
+
+        print("Program exited.")
+        break
+
+    else:
+        print("Invalid choice.")
+
+This combines many concepts you've already learned:
+
+while True
+if / elif / else
+break
+try / except
+with
+open()
+read()
+write()
+append
+os.path.exists()
+os.remove()
+57. File Handling + Functions
+
+You can make file operations reusable.
+
+def write_file(filename, data):
+
+    with open(filename, "w") as file:
+        file.write(data)
+
+    print("File written successfully")
+
+
+def read_file(filename):
+
+    with open(filename, "r") as file:
+        return file.read()
+
+
+write_file("data.txt", "Hello Python")
+
+data = read_file("data.txt")
+
+print(data)
+
+This is a good example of combining functions + file handling.
+
+58. File Handling + OOP
+
+You can also create a class:
+
+class FileManager:
+
+    def write(self, filename, data):
+
+        with open(filename, "w") as file:
+            file.write(data)
+
+    def read(self, filename):
+
+        with open(filename, "r") as file:
+            return file.read()
+
+    def append(self, filename, data):
+
+        with open(filename, "a") as file:
+            file.write(data)
+
+
+manager = FileManager()
+
+manager.write("data.txt", "Hello Python")
+
+print(manager.read("data.txt"))
+
+manager.append("data.txt", "\nHello AI")
+
+This becomes useful in larger applications.
+
+59. File Handling in AI/ML
+
+This topic is particularly important for you because you're moving toward AI/ML.
+
+You will frequently deal with:
+
+CSV datasets
+JSON data
+TXT documents
+Images
+PDFs
+Model files
+Configuration files
+Logs
+
+For example:
+
+import csv
+
+with open("dataset.csv", "r") as file:
+
+    reader = csv.reader(file)
+
+    for row in reader:
+        print(row)
+
+Later you'll commonly use libraries such as:
+
+import pandas as pd
+
+df = pd.read_csv("dataset.csv")
+
+So the basic file-handling concepts help you understand what libraries like Pandas are doing underneath.
+
+
+⭐ File Handling Cheat Sheet
+                 FILE HANDLING
+                       │
+             ┌─────────┴─────────┐
+             │                   │
+           open()              with
+             │
+      ┌──────┼──────┬──────┐
+      │      │      │      │
+      r      w      a      x
+     Read   Write  Append  Create
+      │
+ ┌────┼────────┐
+ │    │        │
+read readline readlines
+ │
+ └── seek() / tell()
+ 
+Other:
+os.path.exists()
+os.remove()
+os.mkdir()
+os.rmdir()
+
+Data:
+CSV → csv
+JSON → json
+Binary → rb / wb
