@@ -6,3 +6,12 @@ city = input("Enter Your City:- ")
 state = input("Enter Your State:- ")
 
 print(f"Hello, My Name is {name} age {age} and i am from {city}, {state}. Thank You!!")
+
+
+
+
+
+
+
+
+# sdfoISDMfsIOSNfuisfnsuifnSIUFNSIFOSLFs
