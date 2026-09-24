@@ -14,4 +14,3 @@ print(f"Hello, My Name is {name} age {age} and i am from {city}, {state}. Thank 
 
 
 
-# sdfoISDMfsIOSNfuisfnsuifnSIUFNSIFOSLFs
