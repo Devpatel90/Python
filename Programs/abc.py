@@ -27,8 +27,7 @@
 #             print("*", end="")
 #         print()
 
-# fruits = ["apple", "banana", "mango", "orange"]
-    
+# fruits = ["apple", "banana", "mango", "orange"]    
 # fruits.append("Rahul")
 # fruits.remove("apple")
 
@@ -251,5 +250,16 @@
     
 # print(rev)
 
-a = int("2", 4)
-print(a)     
+# a = int("2", 4)
+# print(a)     
+
+n = int(input("Enter n: "))
+def sum_n(n):
+    if n == 1:
+        return 1
+    else:
+        return n + sum_n(n - 1)
+
+
+
+print("Sum:", sum_n(n))

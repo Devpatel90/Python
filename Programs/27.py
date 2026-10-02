@@ -32,7 +32,7 @@ try:
             print("Computer:-", computer)
             playerp += 1
             print("Player Points:- ", playerp)
-        
+            
         elif player == "Paper" and computer == "Rock":
             print("You Won")
             print("Computer:-", computer)
